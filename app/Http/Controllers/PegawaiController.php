@@ -39,7 +39,25 @@ class PegawaiController extends Controller
     }
 
     public function lamaKantor() {
+        
+        $final = DB::table(function($query) {
+            $query->selectRaw('CAST(Lama_Kantor as UNSIGNED) as LAMA , Count(*) as JML')
+                ->from('sikka_master')
+                ->groupBy('LAMA');
+        })->selectRaw('
+            CASE WHEN LAMA IN (0,1,2,3,4,5)
+            THEN "0 - 5"
+            WHEN LAMA IN (6,7,8,9,10)
+            THEN "6 - 10"
+            ELSE "> 10"
+            END AS lama_kantor,
+            SUM(JML) AS jumlah
+        ')->groupBy('lama_kantor')->get();
 
+                
+        return response()->json([
+            'data' => $final
+        ],200);
     }
 
 
@@ -64,6 +82,7 @@ class PegawaiController extends Controller
         ],200);
     }
 
+    
 
 
 
