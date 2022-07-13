@@ -24,7 +24,4 @@ Route::get('/lamajab','PegawaiController@lamaJab');
 Route::get('/pulau','PegawaiController@pulau'); 
 Route::get('/pendidikan','PegawaiController@pendidikan'); 
 Route::get('/usia','PegawaiController@usia'); 
-Route::get('/kantor','PegawaiController@lamaKantor'); 
-
-
-
+Route::get('/kantor','PegawaiController@getLamaKantor');

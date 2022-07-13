@@ -3,33 +3,42 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pegawai extends Model
 {
-    protected $table = 'sikka_master';
+    protected $table = 'dbsri_sikka.spg_data_current_ti';
 
-    protected $fllable = [
+    protected $fillable = [
+        'NIP',
         'NM_PEG',
-        'GELAR_SUFFIX',
-        'TMT_Jabatan',
-        'TMT_Kantor',
-        'TMT_Kota',
-        'TMT_Kanwil',
-        'agama',
-        'Lama_Jab',
-        'Jabatan',
-        'Es4',
-        'Unit_Kerja',
-        'Es2',
-        'Pulau',
-        'Jns_kelamin'
+        'JNS_KELAMIN_PEG',
+        'NM_JNS_KELAMIN_PEG',
+        'KD_AGAMA',
+        'NM_AGAMA',
+        'STS_PERKAWINAN',
+        'NO_KARTU_PEG',
+        'NPWP',
+        'KD_UNIT_ORG',
+        'NM_UNIT_ES1',
+        'NM_UNIT_ES2',
+        'NM_UNIT_ES3',
+        'NM_UNIT_ES4',
+        'TMT_PENEMPATAN'
 
     ];
 
+    protected $appends = ['tanggal_peg'];
 
     // public function getLamaJabAttribute($val) {
     //     return floor($val);
     // }
 
+    public function riwayat() {
+        return $this->hasMany(Riwayat::class, 'NIP','NIP');
+    }
 
+    public function getTanggalPegAttribute() {
+        return Carbon::parse($this->TMT_PENEMPATAN);
+    }
 }
